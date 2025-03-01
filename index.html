@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단어 퀴즈</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .quiz-item {
+            margin-bottom: 10px;
+        }
+        .hidden {
+            background-color: lightgray;
+            color: lightgray;
+            border: none;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function maskText(percentage) {
+            let text = "President Yoon is now accused of inciting insurrection by abruptly declaring martial law in early December last year. The National Assembly impeached Yoon later that month. His fate will be determined by the Constitutional Court, which will soon deliver its verdict over whether to uphold the impeachment or not.";
+            let words = text.split(" ");
+            let maskCount = Math.floor(words.length * (percentage / 100));
+            let maskedIndices = new Set();
+
+            while (maskedIndices.size < maskCount) {
+                let index = Math.floor(Math.random() * words.length);
+                maskedIndices.add(index);
+            }
+
+            let maskedText = words.map((word, i) => maskedIndices.has(i) ? "_____" : word).join(" ");
+            document.getElementById("quiz-text").innerText = maskedText;
+        }
+    </script>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>문장 가리기 퀴즈</h2>
+        <p id="quiz-text">President Yoon is now accused of inciting insurrection by abruptly declaring martial law in early December last year. The National Assembly impeached Yoon later that month. His fate will be determined by the Constitutional Court, which will soon deliver its verdict over whether to uphold the impeachment or not.</p>
+        <button onclick="maskText(0)">0% 가림</button>
+        <button onclick="maskText(30)">30% 가림</button>
+        <button onclick="maskText(50)">50% 가림</button>
+        <button onclick="maskText(70)">70% 가림</button>
+    </div>
+</body>
+</html>
